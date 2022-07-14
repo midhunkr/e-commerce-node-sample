@@ -1,0 +1,24 @@
+E-Commerce App
+
+1.Routes
+    1./products
+        1.GET
+        2.POST
+    2./products/{id}
+        1.GET
+        2.PATCH
+        3.DELETE
+    3./orders
+        1.GET
+        2.POST
+    4./orders/{id}
+        1.GET
+        2.POST
+
+2.Libraries
+    1.express
+    2.cors?
+    3.passposrt?
+    4.nodemon => for automatically restarting the server,it is not a global package so add a command in p.json;use npm to access 
+    commands written in p.json
+    5.mongoose => instead of node js driver use mongoose
