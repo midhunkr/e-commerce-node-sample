@@ -1,5 +1,8 @@
 const express=require("express");
 const router=express.Router();
+const mongoose=require("mongoose");
+const Product=require("../models/product");
+
 router.get("/",(req,res)=>{
     res.status(200).json([ {
         "title": "Asparagus",
@@ -23,10 +26,22 @@ router.get("/",(req,res)=>{
 });
 
 router.post("/",(req,res)=>{
-    console.log("res is",req.body);
-    res.status(200).json({
-        data:req.body
+    const newProduct=new Product({
+        _id:new mongoose.Types.ObjectId(),
+        name:req.body.name,
+        price:req.body.price
     });
+    newProduct.save().then((result)=>{
+        res.status(201).json({
+            "message":"Product created successfully"
+        })
+    }).catch((err)=>{
+        res.status(400).json({
+            "message":"Unable to create product"
+        })
+    })
+    console.log("res is",req.body);
+   
 })
 router.get("/:productId",(req,res,next)=>{
     res.status(200).json({

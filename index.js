@@ -3,8 +3,10 @@ const bodyParser=require("express");
 const port=3030;
 const app=express();
 const producRoutes=require("./src/routes/product");
-//---------------------------------------------
-
+const mongoose=require("mongoose");
+const uri=require("./src/auth/auth")
+//DB Connection---------------------------------------------
+mongoose.connect(uri)
 
 //--Required for getting the data passed in body
 //req.body won't work otherwise
