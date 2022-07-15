@@ -51,10 +51,68 @@ router.get("/:productId", (req, res, next) => {
 
 })
 router.patch("/:productId", (req, res, next) => {
-    res.status(200).json({
-        data: req.params.productId,
-        method: "patch"
-    })
+    const id = req.params.productId;
+    const name = req.body.name;
+    const price = req.body.price;
+    if (id && (name || price)) {
+        if (name && price) {
+            Product.updateOne({ _id: id }, {
+                $set: {
+                    name: req.body.name,
+                    price: price
+                }
+            }).exec().then((result) => {
+                res.status(200).json({
+                    "message": "Product Updated"
+                })
+            }).catch((err) => {
+                res.status(500).json({
+                    "message": "Unable to Update details"
+                })
+            })
+        } else if (price) {
+            Product.updateOne({ _id: id }, {
+                $set: {
+
+                    price: price
+                }
+            })
+                .exec()
+                .then((result) => {
+                    res.status(200).json({
+                        "message": "Product Updated"
+                    })
+                }).catch((err) => {
+                    res.status(500).json({
+                        "message": "Unable to Update details"
+                    })
+                })
+        } else if (name) {
+            Product.updateOne({ _id: id }, {
+                $set: {
+                    name: req.body.name,
+
+                }
+            })
+                .exec()
+                .then((result) => {
+                    res.status(200).json({
+                        "message": "Product Updated"
+                    })
+                }).catch((err) => {
+                    res.status(500).json({
+                        "message": "Unable to Update details"
+                    })
+                })
+        }
+
+    } else {
+        res.status(400).json({
+            "message": "Bad request"
+        })
+    }
+
+
 })
 router.delete("/:productId", (req, res, next) => {
     const id = req.params.productId;
@@ -71,7 +129,7 @@ router.delete("/:productId", (req, res, next) => {
     }
     else {
         res.status(400).json({
-          "message":"Bad request"
+            "message": "Bad request"
         })
     }
 
