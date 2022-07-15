@@ -3,6 +3,7 @@ const bodyParser=require("express");
 const port=3030;
 const app=express();
 const producRoutes=require("./src/routes/product");
+const userRoutes=require("./src/routes/user");
 const mongoose=require("mongoose");
 const uri=require("./src/auth/auth")
 //DB Connection---------------------------------------------
@@ -24,6 +25,7 @@ app.use((req,res,next)=>{
 
 //Re-routing all the requests to this end point
 app.use("/product",producRoutes);
+app.use("/user",userRoutes)
 
 //----------------------------------------------
 
