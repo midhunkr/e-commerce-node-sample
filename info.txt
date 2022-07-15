@@ -22,3 +22,4 @@ E-Commerce App
     4.nodemon => for automatically restarting the server,it is not a global package so add a command in p.json;use npm to access 
     commands written in p.json
     5.mongoose => instead of node js driver use mongoose
+    6.bcrypt =>to hash and store the password in an encrypted form in the data base
