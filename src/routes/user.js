@@ -15,6 +15,8 @@ router.post('/signup', (req, res, next) => {
             })
         } else {
             //10 rounds of salt is safe
+            //encrypted password is sent and stored in the db for 
+            //secuirity purposes
             bcrypt.hash(req.body.password, 10, (err, hash) => {
                 if (err) {
 
