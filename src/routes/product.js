@@ -54,6 +54,10 @@ router.patch("/:productId", (req, res, next) => {
     const id = req.params.productId;
     const name = req.body.name;
     const price = req.body.price;
+    // const updateOnly={};
+    // for(const keyPair of req.body){
+    //     updateOnly[keyPair.propName]=keyPair.value;
+    // }
     if (id && (name || price)) {
         if (name && price) {
             Product.updateOne({ _id: id }, {
