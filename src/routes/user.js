@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const User = require("../models/user")
+const User = require("../models/user");
+const e = require("express");
 
 router.post('/signup', (req, res, next) => {
     if (!req.body.email || !req.body.password) {
@@ -41,9 +42,26 @@ router.post('/signup', (req, res, next) => {
 
     })
 
-
-
-
 });
+
+router.post("/login",(req,res,next)=>{
+    User.find({email:req.body.email}).exec().then(result=>{
+        if(!result.length){
+            return res.status(400).json("User does not exits")
+        }
+        bcrypt.compare(req.body.password,result[0].password,(err,result)=>{
+            if(err){
+                return res.status(400).json("User does not exits")
+            }
+            if(result){
+                return res.status(200).json("Success")
+            }else if(!result){
+                return res.status(400).json("User does not exits")
+            }
+        })
+    }).catch(error=>{
+        return res.status(400).json("User does not exits")
+    })
+})
 
 module.exports = router;
