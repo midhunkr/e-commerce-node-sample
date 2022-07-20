@@ -23,3 +23,4 @@ E-Commerce App
     commands written in p.json
     5.mongoose => instead of node js driver use mongoose
     6.bcrypt =>to hash and store the password in an encrypted form in the data base
+    7.json webtoken=>to create jwt

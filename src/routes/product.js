@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const checkAuth = require("../middleware/verifyUser");
 const Product = require("../models/product");
 
 router.get("/", (req, res) => {
@@ -13,7 +14,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/",checkAuth, (req, res) => {
     if (req.body.name && req.body.price) {
         const newProduct = new Product({
             _id: new mongoose.Types.ObjectId(),
@@ -38,7 +39,7 @@ router.post("/", (req, res) => {
     console.log("res is", req.body);
 
 })
-router.get("/:productId", (req, res, next) => {
+router.get("/:productId",checkAuth, (req, res, next) => {
     Product.findById(req.params.productId).exec().then(result => {
         res.status(200).json({
             data: result
@@ -50,7 +51,7 @@ router.get("/:productId", (req, res, next) => {
     })
 
 })
-router.patch("/:productId", (req, res, next) => {
+router.patch("/:productId", checkAuth,(req, res, next) => {
     const id = req.params.productId;
     const name = req.body.name;
     const price = req.body.price;
@@ -118,14 +119,16 @@ router.patch("/:productId", (req, res, next) => {
 
 
 })
-router.delete("/:productId", (req, res, next) => {
+router.delete("/:productId", checkAuth,(req, res, next) => {
     const id = req.params.productId;
+    console.log("the id ",id);
     if (id) {
         Product.deleteOne({ _id: id }).exec().then(result => {
             res.status(200).json({
                 "message": "product deleted"
             })
         }).catch(error => {
+            console.log("the error is",error);
             res.status(500).json({
                 "message": "Unable to delete product"
             })
